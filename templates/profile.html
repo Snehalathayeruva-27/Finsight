@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Profile - FinSight</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f5ff;
+        }
+
+        .container {
+            width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px gray;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2563eb;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .success {
+            color: green;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>FinSight</h1>
+
+    <h2>User Profile</h2>
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <p style="color:green; text-align:center; font-weight:bold;">
+        {{ message }}
+      </p>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<hr>
+
+<h3>Change Password</h3>
+
+<form action="/change_password" method="POST">
+
+    <label>Current Password</label><br>
+    <input type="password" name="current_password" required><br><br>
+
+    <label>New Password</label><br>
+    <input type="password" name="new_password" required><br><br>
+
+    <button type="submit">
+        Change Password
+    </button>
+
+</form>
+
+    <form action="/update_profile" method="POST">
+        <label>Name</label>
+        <input type="text" name="name" value="{{ user[1] }}" required>
+        <label>Email</label>
+        <input type="email" name="email" value="{{ user[2] }}" required>
+        <label>Phone Number</label>
+
+        <input type="tel" 
+        name="phone" 
+        value="{{ user[3] if user|length > 3 else '' }}"
+        placeholder="Enter Phone Number">
+
+        <button type="submit">Update Profile</button>
+
+    </form>
+
+    <a href="/dashboard">Back to Dashboard</a>
+
+</div>
+
+</body>
+
+</html>

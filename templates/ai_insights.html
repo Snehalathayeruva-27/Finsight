@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>AI Insights</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static',filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="expense-container">
+
+<h1>🤖 AI Financial Insights</h1>
+
+<div class="card">
+
+<h2>Financial Summary</h2>
+
+<p><b>Total Income:</b> ₹{{ income }}</p>
+
+<p><b>Total Expense:</b> ₹{{ expense }}</p>
+
+<p><b>Total Savings:</b> ₹{{ savings }}</p>
+
+<p><b>Total Budget:</b> ₹{{ budget }}</p>
+
+<p><b>Total Investment:</b> ₹{{ invested }}</p>
+
+<p><b>Current Value:</b> ₹{{ current }}</p>
+
+<p><b>Profit / Loss:</b> ₹{{ profit }}</p>
+
+</div>
+
+<div class="card">
+
+<h2>Smart AI Suggestions</h2>
+
+{% for item in insights %}
+
+<div class="insight">
+
+{{ item }}
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<br>
+
+<a href="/analytics" class="btn">
+
+⬅ Back to Analytics
+
+</a>
+
+</div>
+
+</body>
+
+</html>

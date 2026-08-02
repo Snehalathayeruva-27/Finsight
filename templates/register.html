@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Register - FinSight</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f5ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .register-box {
+            background: white;
+            width: 350px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px gray;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2563eb;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #2563eb;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="register-box">
+
+    <h1>FinSight</h1>
+
+    <h2>Create New Account</h2>
+
+    <form method="POST">
+
+        <label>Name</label><br>
+        <input type="text" name="name" placeholder="Enter Name"><br><br>
+
+        <label>Email</label><br>
+        <input type="email" name="email" placeholder="Enter Email"><br><br>
+
+        <label>Password</label><br>
+        <input type="password" name="password" placeholder="Enter Password"><br><br>
+
+        <label>Confirm Password</label><br>
+        <input type="password" name="confirm_password" placeholder="Confirm Password"><br><br>
+
+        <button type="submit">Register</button>
+
+    </form>
+
+    <a href="/">Back to Login</a>
+
+</div>
+
+</body>
+
+</html>

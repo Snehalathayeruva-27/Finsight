@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Expense - FinSight</title>
+
+    <style>
+
+        body{
+            margin:0;
+            padding:0;
+            font-family:Arial,sans-serif;
+            background:#f4f7fc;
+        }
+
+        .container{
+            width:500px;
+            margin:60px auto;
+            background:#fff;
+            padding:30px;
+            border-radius:12px;
+            box-shadow:0 4px 15px rgba(0,0,0,.2);
+        }
+
+        h2{
+            text-align:center;
+            color:#2563eb;
+            margin-bottom:25px;
+        }
+
+        label{
+            font-weight:bold;
+            color:#333;
+        }
+
+        input{
+            width:100%;
+            padding:12px;
+            margin-top:8px;
+            margin-bottom:18px;
+            border:1px solid #ccc;
+            border-radius:6px;
+            font-size:15px;
+            box-sizing:border-box;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            border:none;
+            border-radius:6px;
+            background:#2563eb;
+            color:white;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#1d4ed8;
+        }
+
+        .back{
+            display:block;
+            text-align:center;
+            margin-top:20px;
+            text-decoration:none;
+            color:#2563eb;
+            font-weight:bold;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2>Edit Expense</h2>
+
+<form method="POST">
+
+<label>Expense Name</label>
+<input type="text" name="expense_name" value="{{ expense[1] }}" required>
+
+<label>Amount</label>
+<input type="number" name="amount" value="{{ expense[2] }}" required>
+
+<label>Date</label>
+<input type="date" name="date" value="{{ expense[3] }}" required>
+
+<button type="submit">Update Expense</button>
+
+</form>
+
+<a href="/dashboard" class="back">⬅ Back to Dashboard</a>
+
+</div>
+
+</body>
+</html>

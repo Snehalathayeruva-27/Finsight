@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Financial Health Dashboard | FinSight</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+.sidebar{
+    display:none;
+}
+
+.health-page{
+    width:90%;
+    max-width:1200px;
+    margin:30px auto;
+    padding:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+
+    
+
+
+    <!-- Main Content -->
+
+    <main class="health-page">
+
+        <!-- ========================= -->
+        <!-- Header -->
+        <!-- ========================= -->
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>❤️ Financial Health Dashboard</h1>
+
+                <p>
+                    Track your financial performance with AI-powered insights.
+                </p>
+
+            </div>
+
+            <a href="/analytics" class="back-btn">
+
+                ← Back to Analytics
+
+            </a>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- Top Cards -->
+        <!-- ========================= -->
+
+        <div class="top-cards">
+
+            <div class="top-card income">
+
+                <div class="card-icon">💰</div>
+
+                <h4>Total Income</h4>
+
+                <h2>₹{{ total_income }}</h2>
+
+            </div>
+
+            <div class="top-card expense">
+
+                <div class="card-icon">💸</div>
+
+                <h4>Total Expense</h4>
+
+                <h2>₹{{ total_expense }}</h2>
+
+            </div>
+
+            <div class="top-card savings">
+
+                <div class="card-icon">💎</div>
+
+                <h4>Total Savings</h4>
+
+                <h2>₹{{ total_savings }}</h2>
+
+            </div>
+
+            <div class="top-card budget">
+
+                <div class="card-icon">🎯</div>
+
+                <h4>Budget Used</h4>
+
+                <h2>{{ budget_used }}%</h2>
+
+            </div>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- Financial Health Score -->
+        <!-- ========================= -->
+
+        <div class="health-score-card">
+
+            <h2>Financial Health Score</h2>
+
+            <div class="gauge-box">
+
+                <canvas id="healthGauge"></canvas>
+
+                <div class="gauge-text">
+
+                    <h1>{{ health_score }}%</h1>
+
+                    <p class="
+                    {% if health_status=='Excellent' %}
+                        excellent
+                    {% elif health_status=='Good' %}
+                        good
+                    {% elif health_status=='Average' %}
+                        average
+                    {% else %}
+                        poor
+                    {% endif %}
+                    ">
+                        {{ health_status }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- Financial Metrics -->
+        <!-- ========================= -->
+         <div class="section-card">
+
+    <h2>📊 Financial Metrics</h2>
+
+    <!-- Savings Rate -->
+
+    <div class="metric">
+
+        <div class="metric-title">
+
+            <span>Savings Rate</span>
+
+            <span>{{ savings_percent }}%</span>
+
+        </div>
+
+        <div class="progress">
+
+            <div class="progress-fill"
+                 style="width:{{ savings_percent }}%;">
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Budget Usage -->
+
+    <div class="metric">
+
+        <div class="metric-title">
+
+            <span>Budget Usage</span>
+
+            <span>{{ budget_used }}%</span>
+
+        </div>
+
+        <div class="progress">
+
+            <div class="progress-fill"
+                 style="width:{{ budget_used }}%;">
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Investment -->
+
+    <div class="metric">
+
+        <div class="metric-title">
+
+            <span>Investment Profit / Loss</span>
+
+            <span>₹{{ profit }}</span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- Investment + Tips -->
+<!-- ========================= -->
+
+<div class="section-grid">
+
+    <div class="section-card">
+
+        <h2>📈 Investment Status</h2>
+
+        <table class="summary-table">
+
+            <tr>
+                <td>Total Investment</td>
+                <td>₹{{ total_investment }}</td>
+            </tr>
+
+            <tr>
+                <td>Current Value</td>
+                <td>₹{{ current_value }}</td>
+            </tr>
+
+            <tr>
+                <td>Profit / Loss</td>
+                <td>₹{{ profit }}</td>
+            </tr>
+
+            <tr>
+                <td>Status</td>
+                <td>{{ investment_status }}</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    <div class="section-card">
+
+        <h2>💡 Financial Tips</h2>
+
+        {% for tip in tips %}
+
+        <div class="tip">
+
+            {{ tip }}
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- Overall Summary -->
+<!-- ========================= -->
+
+<div class="section-card">
+
+    <h2>📝 Overall Summary</h2>
+
+    <table class="summary-table">
+
+        <tr>
+            <td>Financial Health</td>
+            <td>{{ health_status }}</td>
+        </tr>
+
+        <tr>
+            <td>Savings Rate</td>
+            <td>{{ savings_percent }}%</td>
+        </tr>
+
+        <tr>
+            <td>Budget Usage</td>
+            <td>{{ budget_used }}%</td>
+        </tr>
+
+        <tr>
+            <td>Total Savings</td>
+            <td>₹{{ total_savings }}</td>
+        </tr>
+
+    </table>
+
+</div>
+    </main>
+
+</div>
+
+<script>
+
+// =========================
+// Financial Health Gauge
+// =========================
+
+const health = {{ health_score }};
+
+let gaugeColor = "#22c55e";
+
+if (health < 40){
+    gaugeColor = "#ef4444";
+}
+else if (health < 60){
+    gaugeColor = "#f59e0b";
+}
+else if (health < 80){
+    gaugeColor = "#eab308";
+}
+
+new Chart(document.getElementById("healthGauge"),{
+
+    type:"doughnut",
+
+    data:{
+        datasets:[{
+            data:[health,100-health],
+            backgroundColor:[
+                gaugeColor,
+                "#e5e7eb"
+            ],
+            borderWidth:0
+        }]
+    },
+
+    options:{
+
+        responsive:true,
+
+        maintainAspectRatio:false,
+
+        rotation:-90,
+
+        circumference:360,
+
+        cutout:"75%",
+
+        plugins:{
+            legend:{
+                display:false
+            },
+            tooltip:{
+                enabled:false
+            }
+        }
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>

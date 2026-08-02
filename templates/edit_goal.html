@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Goal - FinSight</title>
+
+    <style>
+        body{
+            font-family:Arial,sans-serif;
+            background:#f2f5ff;
+        }
+
+        .container{
+            width:500px;
+            margin:40px auto;
+            background:white;
+            padding:25px;
+            border-radius:10px;
+            box-shadow:0 0 10px lightgray;
+        }
+
+        input{
+            width:100%;
+            padding:10px;
+            margin:10px 0;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            background:#2563eb;
+            color:white;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+        }
+
+        a{
+            display:block;
+            text-align:center;
+            margin-top:15px;
+            text-decoration:none;
+            color:#2563eb;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Edit Goal</h2>
+
+<form method="POST">
+
+<label>Goal Name</label>
+<input type="text" name="goal_name" value="{{ goal[1] }}" required>
+
+<label>Target Amount</label>
+<input type="number" name="target_amount" value="{{ goal[2] }}" required>
+
+<label>Saved Amount</label>
+<input type="number" name="saved_amount" value="{{ goal[3] }}" required>
+
+<label>Target Date</label>
+<input type="date" name="target_date" value="{{ goal[4] }}" required>
+
+<button type="submit">
+Update Goal
+</button>
+
+</form>
+
+<a href="/goal">← Back to Goal Planning</a>
+
+</div>
+
+</body>
+</html>

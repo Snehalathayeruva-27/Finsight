@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Income - FinSight</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background: #f2f5ff;
+        }
+
+        .container{
+            width: 500px;
+            margin: 40px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px lightgray;
+        }
+
+        h2{
+            text-align: center;
+            color: #2563eb;
+        }
+
+        label{
+            font-weight: bold;
+        }
+
+        input{
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button{
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover{
+            background: #1d4ed8;
+        }
+
+        .back-btn{
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .back-btn:hover{
+            background: #1d4ed8;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Edit Income</h2>
+
+    <form method="POST">
+
+        <label>Income Name</label>
+        <input
+            type="text"
+            name="income_name"
+            value="{{ income[1] }}"
+            required>
+
+        <label>Amount</label>
+        <input
+            type="number"
+            name="amount"
+            value="{{ income[2] }}"
+            required>
+
+        <label>Date</label>
+        <input
+            type="date"
+            name="date"
+            value="{{ income[3] }}"
+            required>
+
+        <button type="submit">
+            Update Income
+        </button>
+
+    </form>
+
+    <a href="/dashboard" class="back-btn">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Investment</title>
+
+    <style>
+        body{
+            font-family:Arial,sans-serif;
+            background:#f2f5ff;
+        }
+
+        .container{
+            width:500px;
+            margin:40px auto;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,.1);
+        }
+
+        h2{
+            text-align:center;
+            color:#2563eb;
+            margin-bottom:20px;
+        }
+
+        label{
+            font-weight:bold;
+        }
+
+        input,select{
+            width:100%;
+            padding:10px;
+            margin:8px 0 15px;
+            border:1px solid #ccc;
+            border-radius:5px;
+            box-sizing:border-box;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            background:#2563eb;
+            color:white;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#1d4ed8;
+        }
+
+        .back-btn{
+            display:inline-block;
+            margin-top:15px;
+            text-decoration:none;
+            background:#22c55e;
+            color:white;
+            padding:10px 15px;
+            border-radius:5px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2>Edit Investment</h2>
+
+<form method="POST">
+
+<label>Investment Name</label>
+<input type="text" name="investment_name" value="{{ investment[2] }}" required>
+
+<label>Investment Type</label>
+<select name="investment_type">
+
+<option value="Stocks" {% if investment[3]=='Stocks' %}selected{% endif %}>Stocks</option>
+
+<option value="Mutual Funds" {% if investment[3]=='Mutual Funds' %}selected{% endif %}>Mutual Funds</option>
+
+<option value="Gold" {% if investment[3]=='Gold' %}selected{% endif %}>Gold</option>
+
+<option value="Fixed Deposit" {% if investment[3]=='Fixed Deposit' %}selected{% endif %}>Fixed Deposit</option>
+
+<option value="Crypto" {% if investment[3]=='Crypto' %}selected{% endif %}>Crypto</option>
+
+</select>
+
+<label>Invested Amount</label>
+<input type="number" name="invested_amount" value="{{ investment[4] }}" required>
+
+<label>Current Value</label>
+<input type="number" name="current_value" value="{{ investment[5] }}" required>
+
+<label>Investment Date</label>
+<input type="date" name="investment_date" value="{{ investment[6] }}" required>
+
+<button type="submit">Update Investment</button>
+
+</form>
+
+<a href="/investment" class="back-btn">← Back to Investment</a>
+
+</div>
+
+</body>
+</html>

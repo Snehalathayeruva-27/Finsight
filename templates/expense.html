@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expense - FinSight</title>
+
+    <style>
+
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f7fc;
+            margin:0;
+            padding:0;
+        }
+
+        .container{
+            width:800px;
+            margin:40px auto;
+            background:white;
+            padding:30px;
+            border-radius:12px;
+            box-shadow:0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        h1{
+            text-align:center;
+            color:#2563eb;
+        }
+
+        h2{
+            color:#333;
+            margin-bottom:20px;
+        }
+
+        label{
+            font-weight:bold;
+        }
+
+        input,
+        select,
+        textarea{
+            width:100%;
+            padding:10px;
+            margin-top:8px;
+            margin-bottom:15px;
+            border:1px solid #ccc;
+            border-radius:6px;
+            box-sizing:border-box;
+            font-size:15px;
+        }
+
+        .row{
+            display:flex;
+            gap:20px;
+        }
+
+        .col{
+            flex:1;
+        }
+
+        textarea{
+            resize:none;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            background:#2563eb;
+            color:white;
+            border:none;
+            border-radius:6px;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#1d4ed8;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:20px;
+        }
+
+        table th{
+            background:#2563eb;
+            color:white;
+            padding:12px;
+        }
+
+        table td{
+            padding:10px;
+            border:1px solid #ddd;
+            text-align:center;
+        }
+
+        a{
+            text-decoration:none;
+            color:#2563eb;
+            font-weight:bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>FinSight</h1>
+
+<h2>Add Expense</h2>
+
+<form method="POST">
+
+<label>Expense Name</label>
+<input type="text" name="expense_name" placeholder="Enter Expense" required>
+
+<div class="row">
+
+<div class="col">
+<label>Amount</label>
+<input type="number" name="amount" required>
+</div>
+
+<div class="col">
+<label>Date</label>
+<input type="date" name="date" required>
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="col">
+<label>Category</label>
+<select name="category">
+<option>Food</option>
+<option>Travel</option>
+<option>Shopping</option>
+<option>Education</option>
+<option>Health</option>
+<option>Entertainment</option>
+<option>Others</option>
+</select>
+</div>
+
+<div class="col">
+<label>Payment Mode</label>
+<select name="payment_mode">
+<option>Cash</option>
+<option>UPI</option>
+<option>Credit Card</option>
+<option>Debit Card</option>
+</select>
+</div>
+
+</div>
+
+<label>Description</label>
+<textarea name="description" rows="4" placeholder="Enter Description"></textarea>
+
+<button type="submit">Save Expense</button>
+
+</form>
+
+<h2>Expense History</h2>
+
+<table>
+
+<tr>
+<th>Expense</th>
+<th>Amount</th>
+<th>Date</th>
+<th>Category</th>
+<th>Payment</th>
+<th>Description</th>
+</tr>
+
+{% for expense in expenses %}
+
+<tr>
+<td>{{ expense[0] }}</td>
+<td>₹{{ expense[1] }}</td>
+<td>{{ expense[2] }}</td>
+<td>{{ expense[3] }}</td>
+<td>{{ expense[4] }}</td>
+<td>{{ expense[5] }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="/dashboard">⬅ Back to Dashboard</a>
+
+</div>
+
+</body>
+</html>

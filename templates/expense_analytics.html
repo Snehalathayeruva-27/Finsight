@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Expense Analytics</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+  <main class="main-content expense-main">
+
+        <h1>📊 Expense Analytics</h1>
+
+        <br>
+
+        <!-- Expense Table -->
+
+        <div class="card">
+
+            <h2>Expense Details</h2>
+
+            <table class="summary-table">
+
+                <tr>
+                    <th>Expense Name</th>
+                    <th>Total Amount</th>
+                </tr>
+
+                {% for expense in expenses %}
+
+                <tr>
+
+                    <td>{{ expense[0] }}</td>
+
+                    <td>₹{{ expense[1] }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+        <br>
+
+        <!-- Charts -->
+
+        <div class="charts-row">
+
+            <!-- Pie Chart -->
+
+            <div class="card">
+
+                <h2>Expense Category</h2>
+
+                <div style="height:350px">
+
+                    <canvas id="expenseChart"></canvas>
+
+                </div>
+
+            </div>
+
+            <!-- Trend Chart -->
+
+            <div class="card">
+
+                <h2>Monthly Expense Trend</h2>
+
+                <div style="height:350px">
+
+                    <canvas id="trendChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <a href="/analytics" class="btn">
+            ⬅ Back to Analytics
+        </a>
+
+    </main>
+
+</div>
+
+<script>
+
+// ================= Expense Pie Chart =================
+
+const expenseLabels = [
+
+{% for item in expenses %}
+
+"{{ item[0] }}",
+
+{% endfor %}
+
+];
+
+const expenseValues = [
+
+{% for item in expenses %}
+
+{{ item[1] }},
+
+{% endfor %}
+
+];
+
+new Chart(document.getElementById("expenseChart"),{
+
+type:"pie",
+
+data:{
+
+labels:expenseLabels,
+
+datasets:[{
+
+data:expenseValues,
+
+backgroundColor:[
+
+"#2563eb",
+"#22c55e",
+"#f59e0b",
+"#ef4444",
+"#8b5cf6",
+"#06b6d4",
+"#ec4899"
+
+]
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:false
+
+}
+
+});
+
+
+// ================= Monthly Trend Chart =================
+
+const monthMap={
+
+"01":"Jan",
+"02":"Feb",
+"03":"Mar",
+"04":"Apr",
+"05":"May",
+"06":"Jun",
+"07":"Jul",
+"08":"Aug",
+"09":"Sep",
+"10":"Oct",
+"11":"Nov",
+"12":"Dec"
+
+};
+
+const trendLabels=[
+
+{% for item in trend %}
+
+monthMap["{{ item[0] }}"],
+
+{% endfor %}
+
+];
+
+const trendValues=[
+
+{% for item in trend %}
+
+{{ item[1] }},
+
+{% endfor %}
+
+];
+
+new Chart(document.getElementById("trendChart"),{
+
+type:"line",
+
+data:{
+
+labels:trendLabels,
+
+datasets:[{
+
+label:"Monthly Expense",
+
+data:trendValues,
+
+borderColor:"#2563eb",
+
+backgroundColor:"rgba(37,99,235,.15)",
+
+fill:true,
+
+tension:.4
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:false
+
+}
+
+});
+
+</script>
+
+</body>
+
+</html>

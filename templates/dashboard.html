@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinSight Dashboard</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h2>💰 FinSight</h2>
+        </div>
+
+        <nav>
+            <a href="/dashboard">🏠 Dashboard</a>
+            <a href="/income">💵 Income</a>
+            <a href="/expense">💸 Expenses</a>
+            <a href="/budget">💰 Budget</a>
+            <a href="/savings">💳 Savings</a>
+            <a href="/investment">📈 Investment</a>
+            <a href="/goal">🎯 Goals</a>
+            <a href="/analytics">📊 Analytics</a>
+            <a href="/reports">📑 Reports</a>
+            <a href="/logout">🚪 Logout</a>
+        </nav>
+
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Top Bar -->
+        <div class="topbar">
+
+    <!-- Left -->
+    <div class="page-title">
+        <h1>Dashboard</h1>
+        <p>Welcome Back 👋</p>
+    </div>
+
+    <!-- Right -->
+    <div class="top-right">
+
+        <!-- Notification -->
+    <div class="notification-wrapper">
+
+    <span class="bell" onclick="toggleNotifications()">
+        🔔
+    </span>
+
+    <div id="notificationBox" class="notification-box">
+
+        <h3>Notifications</h3>
+
+{% if notifications %}
+
+    {% for note in notifications %}
+        <div class="notify">
+            {{ note }}
+        </div>
+    {% endfor %}
+
+{% else %}
+
+    <div class="notify">
+        No Notifications
+    </div>
+
+{% endif %}
+
+    <div>
+
+        </div>
+    </div>
+
+</div>
+
+        <!-- Dark Mode -->
+        
+
+        <!-- Profile -->
+        <a href="/profile" class="profile">
+            <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile">
+
+            <div>
+                <h4>Sneha</h4>
+                <small>User</small>
+            </div>
+        </a>
+
+    </div>
+
+
+</div>
+
+        <div class="cards">
+
+    <div class="card">
+        <h3>💰 Total Income</h3>
+        <h2>₹{{ total_income }}</h2>
+        <p>Income</p>
+    </div>
+
+    <div class="card">
+        <h3>💸 Total Expense</h3>
+        <h2>₹{{ total_expense }}</h2>
+        <p>Expense</p>
+    </div>
+
+    <div class="card">
+        <h3>💎 Total Savings</h3>
+        <h2>₹{{ monthly_savings }}</h2>
+        <p>Savings</p>
+    </div>
+
+    <div class="card">
+        <h3>🎯 Budget</h3>
+        <h2>₹{{ total_budget }}</h2>
+        <p>Budget</p>
+    </div>
+
+</div>
+
+
+        <!-- Coming Soon Section -->
+        <div class="stats-grid">
+
+            
+<table border="1" width="100%" cellpadding="10">
+    <tr style="background:#2563eb; color:white;">
+        <th>Monthly Income</th>
+        <th>Monthly Expense</th>
+        <th>Savings</th>
+    </tr>
+
+    <tr>
+        <td>₹{{ monthly_income }}</td>
+        <td>₹{{ monthly_expense }}</td>
+        <td>₹{{ monthly_savings }}</td>
+    </tr>
+</table>
+
+        </div>        
+
+        <div class="charts-row">
+
+    <div class="chart-box">
+        <h2>📈 Monthly Report</h2>
+        <canvas id="monthlyChart"></canvas>
+    </div>
+
+    <div class="chart-box">
+        <h2>Expense Analytics</h2>
+        <canvas id="expenseChart"></canvas>
+    </div>
+
+</div>
+<h2 style="margin-top:40px;">Recent Transactions</h2>
+<form method="GET" action="/dashboard" style="margin:20px 0; display:flex; align-items:center; gap:10px;">
+
+    <input
+        type="text"
+        name="search"
+        placeholder="🔍 Search by transaction name..."
+        value="{{ search }}"
+        style="flex:1; padding:10px; border-radius:8px; border:1px solid #ccc;">
+
+    <button type="submit">
+        Search
+    </button>
+
+</form>
+
+<table border="1" width="100%" cellpadding="10" cellspacing="0">
+
+    <tr style="background:#2563eb; color:white;">
+        <th>Type</th>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Date</th>
+        <th>Payment Mode</th>
+        <th>Action</th>
+    </tr>
+
+    {% if transactions %}
+
+        {% for t in transactions %}
+
+        <tr>
+    <td>{{ t[4] }}</td>   <!-- Expense -->
+    <td>{{ t[1] }}</td>   <!-- Name -->
+    <td>₹{{ t[2] }}</td>  <!-- Amount -->
+    <td>{{ t[3] }}</td>   <!-- Date -->
+    <td>
+    {% if t[4] == "Income" %}
+        -
+    {% else %}
+        {{ t[5] }}
+    {% endif %}
+</td>
+
+    <td>
+{% if t[4] == "Income" %}
+
+<a href="/edit_income/{{ t[0] }}" class="edit-btn">Edit</a>
+<a href="/delete_income/{{ t[0] }}" class="delete-btn">Delete</a>
+
+{% else %}
+
+<a href="/edit_expense/{{ t[0] }}" class="edit-btn">Edit</a>
+<a href="/delete_expense/{{ t[0] }}" class="delete-btn">Delete</a>
+
+{% endif %}
+</td>
+    
+
+</tr>
+        {% endfor %}
+
+    {% else %}
+
+        <tr>
+            <td colspan="4" style="text-align:center;">
+                No Transactions Found
+            </td>
+        </tr>
+
+    {% endif %}
+
+</table>
+
+<!-- Footer -->
+        <div class="footer">
+            <p>© 2026 FinSight | Smart Personal Finance Tracker</p>
+            <p>Developed by Sneha</p>
+        </div>
+
+    </main>
+
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+// Expense Pie Chart
+const expenseLabels = [
+{% for item in expense_chart %}
+"{{ item[0] }}",
+{% endfor %}
+];
+
+const expenseValues = [
+{% for item in expense_chart %}
+{{ item[1] }},
+{% endfor %}
+];
+
+new Chart(document.getElementById("expenseChart"), {
+    type: "pie",
+    data: {
+        labels: expenseLabels,
+        datasets: [{
+            data: expenseValues,
+            backgroundColor: [
+                "#36A2EB",
+                "#FF6384",
+                "#FFCE56",
+                "#4BC0C0",
+                "#9966FF",
+                "#FF9F40"
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+
+
+// Monthly Bar Chart
+new Chart(document.getElementById("monthlyChart"), {
+    type: "bar",
+    data: {
+        labels: ["Income", "Expense", "Savings"],
+        datasets: [{
+            label: "Monthly Report",
+            data: [
+                {{ monthly_income }},
+                {{ monthly_expense }},
+                {{ monthly_savings }}
+            ],
+            backgroundColor: [
+                "#4CAF50",
+                "#F44336",
+                "#2196F3"
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+
+</script>
+<script>
+function toggleNotifications(){
+
+    const box = document.getElementById("notificationBox");
+
+    if(box.style.display==="block"){
+        box.style.display="none";
+    }else{
+        box.style.display="block";
+    }
+
+}
+</script>
+</body>
+</html>

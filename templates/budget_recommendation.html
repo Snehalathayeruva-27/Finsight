@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Recommendation</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+   <main class="main-content budget-main">
+
+        <!-- Page Heading -->
+        <div class="page-header">
+            <div>
+                <h1>💡 Budget Recommendation</h1>
+                <p>Smart suggestions based on your financial data.</p>
+            </div>
+
+            <a href="/analytics" class="back-btn">
+                ← Back to Analytics
+            </a>
+        </div>
+
+        <!-- Top Cards -->
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <h3>Total Income</h3>
+                <strong>₹{{ income }}</strong>
+            </div>
+
+            <div class="stat-card">
+                <h3>Total Expense</h3>
+                <strong>₹{{ expense }}</strong>
+            </div>
+
+            <div class="stat-card">
+                <h3>Total Savings</h3>
+                <strong>₹{{ savings }}</strong>
+            </div>
+
+            <div class="stat-card">
+                <h3>Total Budget</h3>
+                <strong>₹{{ budget }}</strong>
+            </div>
+
+        </div>
+
+        <!-- Recommendation Card -->
+        <div class="card budget-card">
+
+            <h2>💡 Budget Recommendation</h2>
+
+            <div class="recommendation-box">
+
+                <h3>{{ recommendation }}</h3>
+
+                <ul class="tips-list">
+
+                    {% if expense > budget and budget > 0 %}
+                        <li>🚨 Your expenses have exceeded your budget.</li>
+                        <li>💸 Reduce unnecessary spending.</li>
+                    {% endif %}
+
+                    {% if savings < income * 0.2 %}
+                        <li>💰 Try to save at least 20% of your monthly income.</li>
+                    {% else %}
+                        <li>✅ Excellent savings habit. Keep it up!</li>
+                    {% endif %}
+
+                    {% if savings > 50000 %}
+                        <li>📈 Consider investing part of your savings.</li>
+                    {% endif %}
+
+                    <li>🎯 Review your budget every month.</li>
+                    <li>📊 Track your daily expenses regularly.</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

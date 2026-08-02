@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Income - FinSight</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f5ff;
+        }
+
+        .container {
+            width: 400px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2563eb;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid gray;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        a {
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+            text-decoration: none;
+            color: #2563eb;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>FinSight</h1>
+    <h2>Add Income</h2>
+
+    <form method="POST">
+
+        <input type="text" name="income_name" placeholder="Income Name" required>
+
+        <input type="number" name="amount" placeholder="Amount" required>
+
+        <input type="date" name="date" required>
+
+        <button type="submit">Save Income</button>
+
+    </form>
+
+    <h2>Income History</h2>
+
+    <table>
+
+        <tr>
+    <th>Name</th>
+    <th>Amount</th>
+    <th>Date</th>
+    
+</tr>
+
+{% for income in incomes %}
+
+<tr>
+    <td>{{ income[1] }}</td>
+    <td>₹{{ income[2] }}</td>
+    <td>{{ income[3] }}</td>
+
+</tr>
+        {% endfor %}
+
+    </table>
+
+    <a href="/dashboard">Back to Dashboard</a>
+
+</div>
+
+</body>
+</html>

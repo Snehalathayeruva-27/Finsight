@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinSight Analytics</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h2>💰 FinSight</h2>
+        </div>
+
+        <nav>
+            <a href="/dashboard">🏠 Dashboard</a>
+            <a href="/income">💵 Income</a>
+            <a href="/expense">💸 Expenses</a>
+            <a href="/budget">💰 Budget</a>
+            <a href="/savings">💳 Savings</a>
+            <a href="/investment">📈 Investment</a>
+            <a href="/goal">🎯 Goals</a>
+            <a href="/analytics" class="active">📊 Analytics</a>
+            <a href="/reports">📑 Reports</a>
+            <a href="/logout">🚪 Logout</a>
+        </nav>
+
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <div class="topbar">
+
+            <div class="page-title">
+                <h1>📊 Financial Analytics</h1>
+                <p>Monitor your financial performance and smart insights.</p>
+            </div>
+
+        </div>
+
+        <!-- Analytics Navigation -->
+
+        <div class="analytics-menu">
+
+            <a href="/financial-health" class="menu-btn">
+                ❤️ Financial Health
+            </a>
+
+           <a href="/budget_recommendation" class="tab-btn">
+    💡 Budget Recommendations
+</a>
+
+            <a href="/expense-analytics" class="menu-btn">
+                📊 Expense
+            </a>
+
+            <a href="/ai-insights" class="menu-btn">
+    🤖 AI Insights
+</a>
+
+        </div>
+
+        <!-- ================= Row 1 ================= -->
+
+        <div class="analytics-grid">
+
+            <div class="analytics-card">
+                <h3>💰 Total Income</h3>
+                <strong>₹{{ monthly_income }}</strong>
+            </div>
+
+            <div class="analytics-card">
+                <h3>💸 Total Expense</h3>
+                <strong>₹{{ monthly_expense }}</strong>
+            </div>
+
+            <div class="analytics-card">
+                <h3>💎 Total Savings</h3>
+                <strong>₹{{ monthly_savings }}</strong>
+            </div>
+
+        </div>
+        
+        <!-- ================= Row 2 ================= -->
+
+        <div class="analytics-row">
+
+            <!-- Budget Alert -->
+
+            <div class="card">
+
+                <h2>🔔 Budget Alert</h2>
+
+                <p><strong>Total Budget:</strong> ₹{{ total_budget }}</p>
+
+                <p><strong>Total Expense:</strong> ₹{{ monthly_expense }}</p>
+
+                <p><strong>Remaining:</strong> ₹{{ remaining_budget }}</p>
+
+                <div class="alert-box
+                {% if 'Exceeded' in budget_alert %}
+                    danger
+                {% elif '80%' in budget_alert %}
+                    warning
+                {% else %}
+                    success
+                {% endif %}
+                ">
+
+                    {{ budget_alert }}
+
+                </div>
+
+            </div>
+
+            <!-- Goal Progress -->
+
+            <div class="card">
+
+                <h2>🎯 Goal Progress</h2>
+
+                <h3>{{ goal_name }}</h3>
+
+                <div class="progress">
+
+                    <div class="progress-fill"
+                         style="width:{{ goal_percent }}%">
+                    </div>
+
+                </div>
+
+                <br>
+
+                <p>
+                    ₹{{ saved_amount }}
+                    /
+                    ₹{{ target_amount }}
+                </p>
+
+                <strong>{{ goal_percent }}% Completed</strong>
+
+            </div>
+
+        </div>
+        <!-- ================= Row 3 ================= -->
+
+<div class="analytics-row">
+
+    <!-- Monthly Comparison -->
+
+    <div class="card comparison-card">
+
+        <h2>📊 Monthly Comparison</h2>
+
+        <div class="compare-item">
+            <span>Income</span>
+            <span class="{% if income_change >= 0 %}up{% else %}down{% endif %}">
+                {{ income_change }}%
+            </span>
+        </div>
+
+        <div class="compare-item">
+            <span>Expense</span>
+            <span class="{% if expense_change <= 0 %}up{% else %}down{% endif %}">
+                {{ expense_change }}%
+            </span>
+        </div>
+
+        <div class="compare-item">
+            <span>Savings</span>
+            <span class="{% if savings_change >= 0 %}up{% else %}down{% endif %}">
+                {{ savings_change }}%
+            </span>
+        </div>
+
+    </div>
+
+    <!-- Monthly Financial Summary -->
+
+    <div class="card">
+
+        <h2>📄 Monthly Financial Summary</h2>
+
+        <table class="summary-table">
+
+            <tr>
+                <td>Total Income</td>
+                <td>₹{{ monthly_income }}</td>
+            </tr>
+
+            <tr>
+                <td>Total Expense</td>
+                <td>₹{{ monthly_expense }}</td>
+            </tr>
+
+            <tr>
+                <td>Total Savings</td>
+                <td>₹{{ monthly_savings }}</td>
+            </tr>
+
+            <tr>
+                <td>Financial Health</td>
+                <td>{{ health_status }}</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</div>
+
+<!-- ================= Row 4 ================= -->
+
+<div class="analytics-row">
+
+    <!-- Financial Achievement -->
+
+    <div class="card achievement-card">
+
+        <h2>🏆 Financial Achievements</h2>
+
+        <div class="badges">
+
+            {% if monthly_savings >= 100000 %}
+            <div class="badge gold">
+                🥇
+                <strong>Super Saver</strong>
+                <p>Saved ₹1 Lakh+</p>
+            </div>
+            {% endif %}
+
+            {% if health_score >= 80 %}
+            <div class="badge green">
+                🌟
+                <strong>Healthy Finance</strong>
+                <p>Excellent Score</p>
+            </div>
+            {% endif %}
+
+            {% if remaining_budget >= 0 %}
+            <div class="badge blue">
+                💰
+                <strong>Budget Master</strong>
+                <p>Within Budget</p>
+            </div>
+            {% endif %}
+
+            {% if profit > 0 %}
+            <div class="badge purple">
+                📈
+                <strong>Smart Investor</strong>
+                <p>Investment Profit</p>
+            </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <!-- Investment Performance -->
+
+    <div class="card">
+
+        <h2>📈 Investment Performance</h2>
+
+        <p><strong>Total Investment:</strong> ₹{{ total_investment }}</p>
+
+        <p><strong>Current Value:</strong> ₹{{ current_value }}</p>
+
+        <p><strong>Profit / Loss:</strong> ₹{{ profit }}</p>
+
+        <hr>
+
+        <strong>{{ investment_alert }}</strong>
+
+    </div>
+
+</div>
+</main>
+
+</div>
+
+<script>
+
+// ================= Expense Pie Chart =================
+
+const expenseLabels = [
+{% for item in expense_chart %}
+"{{ item[0] }}",
+{% endfor %}
+];
+
+const expenseValues = [
+{% for item in expense_chart %}
+{{ item[1] }},
+{% endfor %}
+];
+
+// Create chart only if canvas exists
+
+if(document.getElementById("expenseChart")){
+
+new Chart(document.getElementById("expenseChart"),{
+
+type:"pie",
+
+data:{
+labels:expenseLabels,
+
+datasets:[{
+data:expenseValues,
+
+backgroundColor:[
+"#36A2EB",
+"#FF6384",
+"#FFCE56",
+"#4BC0C0",
+"#9966FF",
+"#FF9F40"
+]
+
+}]
+},
+
+options:{
+responsive:true,
+maintainAspectRatio:false,
+
+plugins:{
+legend:{
+position:"top"
+}
+}
+
+}
+
+});
+
+}
+
+
+// ================= Monthly Expense Trend =================
+
+const monthMap={
+
+"01":"Jan",
+"02":"Feb",
+"03":"Mar",
+"04":"Apr",
+"05":"May",
+"06":"Jun",
+"07":"Jul",
+"08":"Aug",
+"09":"Sep",
+"10":"Oct",
+"11":"Nov",
+"12":"Dec"
+
+};
+
+const trendLabels=[
+{% for item in expense_trend %}
+monthMap["{{ item[0] }}"],
+{% endfor %}
+];
+
+const trendData=[
+{% for item in expense_trend %}
+{{ item[1] }},
+{% endfor %}
+];
+
+if(document.getElementById("expenseTrendChart")){
+
+new Chart(document.getElementById("expenseTrendChart"),{
+
+type:"line",
+
+data:{
+
+labels:trendLabels,
+
+datasets:[{
+
+label:"Monthly Expense",
+
+data:trendData,
+
+borderColor:"#2563eb",
+
+backgroundColor:"rgba(37,99,235,.15)",
+
+fill:true,
+
+tension:.4
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:false
+
+}
+
+});
+
+}
+
+
+// ================= Financial Health =================
+
+const health={{ health_score }};
+
+let color="#22c55e";
+
+if(health<40){
+
+color="#ef4444";
+
+}
+
+else if(health<60){
+
+color="#f59e0b";
+
+}
+
+else if(health<80){
+
+color="#eab308";
+
+}
+
+if(document.getElementById("healthChart")){
+
+new Chart(document.getElementById("healthChart"),{
+
+type:"doughnut",
+
+data:{
+
+datasets:[{
+
+data:[health,100-health],
+
+backgroundColor:[color,"#e5e7eb"],
+
+borderWidth:0
+
+}]
+
+},
+
+options:{
+
+rotation:270,
+
+circumference:180,
+
+cutout:"75%",
+
+responsive:true,
+
+plugins:{
+
+legend:{
+display:false
+},
+
+tooltip:{
+enabled:false
+}
+
+}
+
+}
+
+});
+
+}
+
+</script>
+
+</body>
+
+</html>

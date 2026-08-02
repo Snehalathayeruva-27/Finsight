@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit Savings - FinSight</title>
+
+    <style>
+        body{
+            font-family:Arial, sans-serif;
+            background:#f2f5ff;
+        }
+
+        .container{
+            width:450px;
+            margin:40px auto;
+            background:white;
+            padding:30px;
+            border-radius:15px;
+            box-shadow:0 0 15px #ccc;
+        }
+
+        h1{
+            text-align:center;
+            color:#2563eb;
+        }
+
+        label{
+            display:block;
+            margin-top:15px;
+            font-weight:bold;
+        }
+
+        input,select{
+            width:100%;
+            padding:12px;
+            margin-top:8px;
+            border:1px solid #ccc;
+            border-radius:8px;
+        }
+
+        button{
+            width:100%;
+            margin-top:25px;
+            padding:12px;
+            background:#16a34a;
+            color:white;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#15803d;
+        }
+
+        a{
+            display:block;
+            text-align:center;
+            margin-top:20px;
+            text-decoration:none;
+            color:#2563eb;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Edit Savings</h1>
+
+    <form method="POST">
+
+        <label>Savings Name</label>
+        <input type="text"
+               name="name"
+               value="{{ saving[1] }}"
+               required>
+
+        <label>Amount</label>
+        <input type="number"
+               name="amount"
+               value="{{ saving[2] }}"
+               required>
+
+        <label>Category</label>
+
+        <select name="category">
+
+            <option value="Emergency Fund"
+            {% if saving[3]=="Emergency Fund" %}selected{% endif %}>
+            Emergency Fund
+            </option>
+
+            <option value="Travel"
+            {% if saving[3]=="Travel" %}selected{% endif %}>
+            Travel
+            </option>
+
+            <option value="Education"
+            {% if saving[3]=="Education" %}selected{% endif %}>
+            Education
+            </option>
+
+            <option value="Investment"
+            {% if saving[3]=="Investment" %}selected{% endif %}>
+            Investment
+            </option>
+
+        </select>
+
+        <label>Date</label>
+        <input type="date"
+               name="date"
+               value="{{ saving[4] }}"
+               required>
+
+        <button type="submit">
+            Update Savings
+        </button>
+
+    </form>
+
+    <a href="/savings">⬅ Back to Savings</a>
+
+</div>
+
+</body>
+</html>
